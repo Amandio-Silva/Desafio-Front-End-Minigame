@@ -1,0 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.start-screen, .game-screen {
+  background: #2a2a2a;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  position: relative;
+}
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+h1, h2 {
+  color: #f9f9f9;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.sequence-display span {
+  font-size: 24px;
+  margin: 0 5px;
+}
+
+.sequence-display span.current {
+  color: #FFD700;
+}
+
+.ranking {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  z-index: 1000;  /* Garante que o ranking estará acima de outros elementos */
+}
+
+.ranking h2 {
+  margin: 0 0 10px 0;
+}
+
+.ranking ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking li {
+  margin-bottom: 5px;
+}
