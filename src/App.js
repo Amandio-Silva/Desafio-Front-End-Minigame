@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import SequenceDisplay from './components/SequenceDisplay';
-import Timer from './components/Timer';
 import Feedback from './components/Feedback';
 import Button from './components/Button';
 import Ranking from './components/Ranking';
+import ProgressBar from './components/ProgressBar'; 
+import Modal from './components/Modal';
 import './styles.css';
-import { motion } from 'framer-motion';  // Certifique-se de que framer-motion está instalado
+import { motion } from 'framer-motion';
 
 const generateRandomSequence = (length) => {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -25,6 +26,8 @@ const App = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [nick, setNick] = useState('');
   const [ranking, setRanking] = useState([]);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const storedRanking = JSON.parse(localStorage.getItem('ranking')) || [];
@@ -39,7 +42,8 @@ const App = () => {
       setTimeLeft(30);
       setIsGameOver(false);
       setFeedback('');
-      console.log(newSequence); // Para debug, remove depois de testar
+      setIsModalVisible(false);
+      console.log("Generated sequence:", newSequence); // Para debug
     }
   }, [isStarted]);
 
@@ -50,6 +54,8 @@ const App = () => {
     } else if (timeLeft === 0) {
       setIsGameOver(true);
       setFeedback('Tempo esgotado!');
+      setModalMessage('Tente novamente!');
+      setIsModalVisible(true);
     }
   }, [timeLeft, isStarted, isGameOver]);
 
@@ -57,6 +63,9 @@ const App = () => {
     if (isGameOver || !isStarted) return;
 
     const key = event.key.toUpperCase();
+    console.log("Key pressed:", key); // Para debug
+    console.log("Expected key:", sequence[currentIndex]); // Para debug
+
     if (key === sequence[currentIndex]) {
       setCurrentIndex(currentIndex + 1);
       setFeedback('Correto!');
@@ -64,10 +73,14 @@ const App = () => {
         setIsGameOver(true);
         setFeedback('Você venceu!');
         updateRanking(nick, timeLeft);
+        setModalMessage('Você venceu!');
+        setIsModalVisible(true);
       }
     } else {
       setIsGameOver(true);
       setFeedback('Errado! Jogo terminado.');
+      setModalMessage('Tente novamente!');
+      setIsModalVisible(true);
     }
   };
 
@@ -95,7 +108,8 @@ const App = () => {
     setTimeLeft(30);
     setIsGameOver(false);
     setFeedback('');
-    console.log(newSequence); // Para debug, remove depois de testar
+    setIsModalVisible(false);
+    console.log("Generated sequence:", newSequence); // Para debug
   };
 
   return (
@@ -115,12 +129,13 @@ const App = () => {
         <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="game-screen">
           <h2>Pressione as teclas na sequência:</h2>
           <SequenceDisplay sequence={sequence} currentIndex={currentIndex} />
-          <Timer timeLeft={timeLeft} />
+          <ProgressBar timeLeft={timeLeft} totalTime={30} />  {/* Adiciona a barra de progresso */}
           <Feedback feedback={feedback} />
           {isGameOver && <Button onClick={resetGame}>Reiniciar</Button>}
         </motion.div>
       )}
       <Ranking ranking={ranking} />
+      {isModalVisible && <Modal message={modalMessage} onClose={() => setIsModalVisible(false)} />}
     </div>
   );
 };

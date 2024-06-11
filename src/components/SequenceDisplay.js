@@ -1,12 +1,16 @@
 import React from 'react';
+import './SequenceDisplay.css';
 
 const SequenceDisplay = ({ sequence, currentIndex }) => {
   return (
-    <div>
+    <div className="sequence-container">
       {sequence.split('').map((char, index) => (
-        <span key={index} style={{ color: index === currentIndex ? 'red' : 'black' }}>
+        <div
+          key={index}
+          className={`sequence-char ${index === currentIndex ? 'active' : ''}`}
+        >
           {char}
-        </span>
+        </div>
       ))}
     </div>
   );

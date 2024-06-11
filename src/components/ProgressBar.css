@@ -1,0 +1,32 @@
+.progress-bar-container {
+    width: 100%;
+    height: 20px;
+    background-color: #555;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5); /* Amarelo com efeito desfocado */
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #FFD700; /* Amarelo */
+    transition: width 1s linear;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .progress-bar-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.5); /* Amarelo com efeito desfocado */
+    pointer-events: none;
+  }
+  
